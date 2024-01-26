@@ -10,12 +10,18 @@ import (
 	"time"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
 )
 
-var token string = "OTcyMDAwMzk1MDk2MzkxNzAw.GaD8_r.dcBz3mEF-NQ3G4fl3qsYUkHTyzHsarkcRl_L4w"
 var buffer = make([][]byte, 0)
 
 func main() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println("Error loading .env file")
+		return
+	}
+	token := os.Getenv("TOKEN")
 
 	if token == "" {
 		fmt.Println("No token provided. Please run: airhorn -t <bot token>")
@@ -23,7 +29,7 @@ func main() {
 	}
 
 	// Load the sound file.
-	err := loadSound()
+	err = loadSound()
 	if err != nil {
 		fmt.Println("Error loading sound: ", err)
 		fmt.Println("Please copy $GOPATH/src/github.com/bwmarrin/examples/airhorn/airhorn.dca to this directory.")
